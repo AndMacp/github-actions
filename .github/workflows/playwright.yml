@@ -13,3 +13,12 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps
       - run: npx playwright test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v6
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: echo "deploys project"
