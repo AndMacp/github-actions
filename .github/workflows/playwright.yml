@@ -16,10 +16,10 @@ jobs:
 
   
       - name: Save test report
-        uses: actions/download-artifact@v6
+        uses: actions/upload-artifact@v6
         with:
           name: test-report
-          path: test.json
+          path: playwright-report/
 
 
   deploy:
@@ -34,5 +34,5 @@ jobs:
       - name: Get test report
         uses: actions/download-artifact@v6
         with:
-          name: dist-files
+          name: test-report
           
