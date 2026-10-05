@@ -1,18 +1,14 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.56.1-noble'
+        }
+    }
 
     stages {
-
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Setup') {
             steps {
                 sh 'npm ci'
-                sh 'npx playwright install --with-deps'
             }
         }
 
