@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Setup') {
+            steps {
+                sh 'npm ci'
+                sh 'npx playwright install --with-deps'
+            }
+        }
+
+        stage('Playwright Tests') {
+            steps {
+                sh 'npx playwright test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'deploys project'
+            }
+        }
+    }
+
+    post {
+        failure {
+            archiveArtifacts(
+                artifacts: 'playwright-report/**',
+                allowEmptyArchive: true
+            )
+        }
+    }
+}
