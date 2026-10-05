@@ -16,10 +16,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps
-      - run: npx playwright test
+      - name: Playwright tests
+        id: playwright-test
+        run: npx playwright test
 
   
       - name: Save test report
+        if: failure() && steps.playwright-test.outcome == 'failure'
         uses: actions/upload-artifact@v6
         with:
           name: test-report
@@ -38,7 +41,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps
       - run: echo "deploys project"
-
+        
       - name: Get test report
         uses: actions/download-artifact@v6
         with:
